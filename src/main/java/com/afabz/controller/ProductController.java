@@ -20,7 +20,7 @@ import com.afabz.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@CrossOrigin(origins= "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/api/products")
 public class ProductController {
    
@@ -28,13 +28,13 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping
-	public ResponseEntity<Map<String, Object>>getProducts(@RequestParam(required=false)String category, HttpServletRequest request){
+	public ResponseEntity<Map<String, Object>>getProducts(@RequestParam(required = false) String category, HttpServletRequest request){
 		try {
 			// Retrieve authenticated user from the request attribute set by the filter
 			User authenticatedUser = (User)request.getAttribute("authenticatedUser");
-		    if(authenticatedUser == null) {
-		    	return ResponseEntity.status(401).body(Map.of("error", "Unauthorized access"));
-		    }
+    	    if(authenticatedUser == null) {
+ 	    	return ResponseEntity.status(401).body(Map.of("error", "Unauthorized access"));
+     	    }
 		    
 		    // Fetch products based on the category filter
 		    List<Product>products = productService.getProductByCategory(category);
@@ -43,7 +43,7 @@ public class ProductController {
 		    Map<String, Object> response = new HashMap<>();
 		    
 		    // Add user info
-		    Map<String, String>userInfo = new HashMap<>();
+		     Map<String, String>userInfo = new HashMap<>();
 		    userInfo.put("name", authenticatedUser.getUsername());
 		    userInfo.put("role", authenticatedUser.getRole().name());
 		    response.put("user", userInfo);
@@ -58,7 +58,6 @@ public class ProductController {
 		    	productDetails.put("description", product.getDescription());
 		    	productDetails.put("price", product.getPrice());
 		    	productDetails.put("stock", product.getStock());
-		    	
 		    	
 		    	//Fetch product images
 		    	List<String> images = productService.getProductImages(product.getProductId());

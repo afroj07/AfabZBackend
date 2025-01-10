@@ -18,7 +18,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebFilter(urlPatterns="/api/*") //Apply the filter to all /api/* endpoints
+
+@WebFilter(urlPatterns = "/api/*") //Apply the filter to all /api/* endpoints
+
 public class AuthenticationFilter implements Filter{
 
 	private final AuthService authService;
@@ -44,10 +46,10 @@ public class AuthenticationFilter implements Filter{
 		System.out.println("Request URI:" + requestURI);
 		
 		//Allow  access to specific endpoints
-		if(requestURI.equals("/api/users/register")|| requestURI.equals("/api/auth/login")) {
+		if(requestURI.equals("/api/users/register") || requestURI.equals("/api/auth/login")) {
 			System.out.println("Request allowed without authentication:" + requestURI);
 			chain.doFilter(request, response);
-		   return;
+		    return;
 		}
 		
 		//Handle preflight (OPTIONS) requests
@@ -76,6 +78,7 @@ public class AuthenticationFilter implements Filter{
 		System.out.println("Extracted Username:" + username);
 		
 		Optional<User> userOptional = userRepository.findByUsername(username);
+		
 		if(userOptional.isEmpty()) {
 			System.out.println("User not found in database for username:" + username);
 			httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -94,15 +97,20 @@ public class AuthenticationFilter implements Filter{
 
 	// Utility method to extract authtoken from cookies
 	private String getAuthTokenFromCookies(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		if(cookies != null) {
-			return Arrays.stream(cookies)
-					.filter(cookie -> "authToken".equals(cookie.getName()))
-					.map(Cookie::getValue)
-					.findFirst()
-					.orElse(null);
-		}
-		return null;
+	    Cookie[] cookies = request.getCookies();
+	    if (cookies != null) {
+	        Arrays.stream(cookies).forEach(cookie -> 
+	            System.out.println("Cookie Name: " + cookie.getName() + ", Value: " + cookie.getValue())
+	        );
+	        return Arrays.stream(cookies)
+	                     .filter(cookie -> "authToken".equals(cookie.getName()))
+	                     .map(Cookie::getValue)
+	                     .findFirst()
+	                     .orElse(null);
+	    }
+	    System.out.println("No cookies found in the request");
+	    return null;
 	}
+
 	
 }

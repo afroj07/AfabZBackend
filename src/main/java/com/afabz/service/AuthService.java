@@ -55,10 +55,10 @@ public class AuthService {
      
 	  String token  = Jwts.builder()
 			   .setSubject(user.getUsername())
-			   .claim("role",user.getRole().name())
+			   .claim("role", user.getRole().name())
 			   .setIssuedAt(new Date())
-			   .setExpiration(new Date(System.currentTimeMillis()+3600000)) //1h
-			   .signWith(SIGNING_KEY,SignatureAlgorithm.HS512)
+			   .setExpiration(new Date(System.currentTimeMillis() + 3600000)) //1h
+			   .signWith(SIGNING_KEY, SignatureAlgorithm.HS512)
 			   .compact();
 	  
 	  saveToken(user, token);
@@ -86,9 +86,9 @@ public boolean validateToken(String token) {
 	try {
 		//parse and validate the token
 		Jwts.parserBuilder()
-		.setSigningKey(SIGNING_KEY)
-		.build()
-		.parseClaimsJws(token);
+		    .setSigningKey(SIGNING_KEY)
+		    .build()
+		    .parseClaimsJws(token);
 		
 		//Check if the token existx in the database and is not expired
 		Optional<JWTToken>jwtToken = jwtTokenRepository.findByToken(token);
