@@ -90,7 +90,7 @@ public boolean validateToken(String token) {
 		    .build()
 		    .parseClaimsJws(token);
 		
-		//Check if the token existx in the database and is not expired
+		//Check if the token exist in the database and is not expired
 		Optional<JWTToken>jwtToken = jwtTokenRepository.findByToken(token);
 		return jwtToken.isPresent() && jwtToken.get().getExpiresAt().isAfter(LocalDateTime.now());
 	}catch(Exception e) {

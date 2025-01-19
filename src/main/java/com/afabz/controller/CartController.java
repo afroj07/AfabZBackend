@@ -44,6 +44,7 @@ public class CartController {
 	private CartRepository cartRepository;
 	
 	@GetMapping("/items/count")
+	@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 	public ResponseEntity<Integer> getCartItemCount(@RequestParam  String username){
 		User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));	
 	
@@ -72,6 +73,7 @@ public class CartController {
 	
 	// Fetch all cart items for the user (based on username)
 	@GetMapping("/items")
+	@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 	public ResponseEntity<Map<String, Object>> getCartItems(HttpServletRequest request){
 		  // Fetch user by username to get the userId
 
@@ -104,9 +106,10 @@ public class CartController {
 	
 	// Delete Cart Item
 	@DeleteMapping("/delete")
+	@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 	public ResponseEntity<Void> deleteCartItem(@RequestBody Map<String, Object> request) {
 		String username = (String) request.get("username");
-		int productId = (int) request.get("produtId");
+		int productId = (int) request.get("productId");
 		
 		//Fetch the user usingname
 		

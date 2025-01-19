@@ -43,7 +43,7 @@ public class AuthenticationFilter implements Filter{
 		
 		//Get the request uri
 		String requestURI = httpRequest.getRequestURI();
-		System.out.println("Request URI:" + requestURI);
+		System.err.println("Request URI:" + requestURI);
 		
 		//Allow  access to specific endpoints
 		if(requestURI.equals("/api/users/register") || requestURI.equals("/api/auth/login")) {
@@ -54,7 +54,7 @@ public class AuthenticationFilter implements Filter{
 		
 		//Handle preflight (OPTIONS) requests
 		if(httpRequest.getMethod().equalsIgnoreCase("OPTIONS")) {
-			httpResponse.setHeader("Access-Control-Allow-Origin","http://localhost:5173");
+			httpResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 			httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 		    httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 		    httpResponse.setHeader("Access-Control-Allow-Credentials", "true");

@@ -21,12 +21,6 @@ public interface CartRepository extends JpaRepository<CartItem, Integer> {
 	@Query("SELECT c FROM CartItem c WHERE c.user.userId = :userId AND c.product.productId = :productId")
 	Optional<CartItem> findByUserAndProduct(int userId, int productId);
 	
-	
-	//Count the total quantity of items in the cart
-   @Query("SELECT COALESCE(SUM(c.quantity), 0) FROM CartItem c WHERE c.user = :user")
-   int countTotalItems(@Param("user") User user);
-   List<CartItem> findAllByUser(User user);
-   
    @Query("SELECT c FROM CartItem c JOIN FETCH c.product p LEFT JOIN FETCH ProductImage pi ON p.productId = pi.product.productId WHERE c.user.userId = :userId")
    List<CartItem> findCartItemWithProductDetails(int userId);
    
@@ -39,4 +33,18 @@ public interface CartRepository extends JpaRepository<CartItem, Integer> {
    @Transactional
    @Query("DELETE FROM CartItem c WHERE c.user.userId = :userId AND c.product.productId = :productId")
    void deleteCartItem(int userId, int productId);
+   
+   
+
+	//Count the total quantity of items in the cart
+  @Query("SELECT COALESCE(SUM(c.quantity), 0) FROM CartItem c WHERE c.user.userId = :userId")
+  int countTotalItems(@Param("user") User user);
+
+  
+  // Delete all product from the cart
+  @Modifying
+  @Transactional
+  @Query("DELETE FROM CartItem c WHERE c.user.userId = :userId")
+  void deleteAllCartItemsByUserId(int userId);
+  
 }
