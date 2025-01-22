@@ -33,7 +33,7 @@ public class OrderItem {
     @Column(name = "price_per_unit", nullable = false)
     private BigDecimal pricePerUnit;
 
-    @Column(name = "total_price", nullable = false)
+    @Column(name = "total_amount", nullable = false)
     private BigDecimal totalPrice;
 
 	public OrderItem() {

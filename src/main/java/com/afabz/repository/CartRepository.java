@@ -38,7 +38,7 @@ public interface CartRepository extends JpaRepository<CartItem, Integer> {
 
 	//Count the total quantity of items in the cart
   @Query("SELECT COALESCE(SUM(c.quantity), 0) FROM CartItem c WHERE c.user.userId = :userId")
-  int countTotalItems(@Param("user") User user);
+  int countTotalItems(int userId);
 
   
   // Delete all product from the cart

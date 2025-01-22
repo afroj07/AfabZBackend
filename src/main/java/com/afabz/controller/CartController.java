@@ -44,7 +44,6 @@ public class CartController {
 	private CartRepository cartRepository;
 	
 	@GetMapping("/items/count")
-	@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 	public ResponseEntity<Integer> getCartItemCount(@RequestParam  String username){
 		User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));	
 	

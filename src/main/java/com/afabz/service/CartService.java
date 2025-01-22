@@ -35,8 +35,7 @@ public class CartService {
 
 	// Get the total cart item count for  a user
    public int getCartItemCount(int userId) {
-	   User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
-	   return cartRepository.countTotalItems(user);
+	   return cartRepository.countTotalItems(userId);
 	   
    }
    
